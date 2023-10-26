@@ -1,0 +1,3 @@
+user, tusher@user.com, user1234, tusher
+admin, anik@admin.com, admin1234, anik majumder
+manager, saiful@manager.com, manager1234, saifulIslam
