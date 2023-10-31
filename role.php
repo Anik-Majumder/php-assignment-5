@@ -2,13 +2,13 @@
 
 session_start();
 
-// if (!isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
-//     header("Location: login.php");
-// }
+if (!isset($_SESSION["role"]) || $_SESSION["role"] != "admin") {
+    header("Location: login.php");
+}
 
-// if ($_SESSION["role"] == "user") {
-//     header("Location: user.php");
-// }
+if ($_SESSION["role"] == "user") {
+    header("Location: user.php");
+}
 
 $fullname = $_POST["fullname"] ?? "";
 $email = $_POST["Email"] ?? "";
@@ -18,9 +18,9 @@ $role = $_POST["role"] ?? "";
 $errorMessege = "";
 
 
-if ($email != "" && $password != "" && $fullname != "") {
+if ($email != "" && $password != "" && $role != "") {
     $fp = fopen("./data.txt", "a");
-    fwrite($fp, "\n user,{$email}, {$password}, {$fullname}");
+    fwrite($fp, "\n {$role},{$email}, {$password}, {$fullname}");
     fclose($fp);
 
     header("Location: login.php");
@@ -46,9 +46,13 @@ if ($email != "" && $password != "" && $fullname != "") {
 
 <body>
     <div class="container w-50 bg-info text-dark p-4 my-4">
-        <form action="registration.php" method="POST">
+        <form action="role.php" method="POST">
             <div>
-                <h1 class="pb-4 text-center">Register Now</h1>
+                <h1 class="pb-4 text-center">Add a Member</h1>
+            </div>
+            <div class="mb-3">
+                <label for="role" class="form-label">Role</label>
+                <input type="text" class="form-control" id="role" name="role" placeholder="admin / user">
             </div>
             <div class="mb-3">
                 <label for="fullname" class="form-label">Username</label>
@@ -68,9 +72,15 @@ if ($email != "" && $password != "" && $fullname != "") {
 
 
             <div>
-                <button type="submit" class="btn btn-primary">Register</button>
-                <p>already have an account ? <a type="button" class="" href="./admin.php">login</a></p>
+                <button type="submit" class="btn btn-primary bg-warning text-dark border-0">Add</button>
+                <button class="btn btn-primary bg-warning text-dark border-0 "><a type="button" class=""
+                        href="./admin.php">go to admin</a></button>
+            </div>
 
+            <div>
+                <p>
+                    <?php echo $errorMessege ?>
+                </p>
             </div>
 
         </form>
